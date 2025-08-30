@@ -149,7 +149,11 @@
         if (!file) return;
         const reader = new FileReader();
         reader.onload = function(ev) {
-            document.getElementById('draggable-img').src = ev.target.result;
+            const img = document.getElementById('draggable-img');
+            img.src = ev.target.result;
+            img.style.left = '40%';
+            img.style.top = '53%';
+            img.style.width = '100px';
         };
         reader.readAsDataURL(file);
     });
