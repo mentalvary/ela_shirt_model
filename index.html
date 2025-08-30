@@ -53,6 +53,7 @@
     left:43%;
     z-index: 5001;
     cursor: pointer;
+    text-align: center;
 }
 
 #bottom-text {
@@ -64,6 +65,7 @@
     left:43%;
     z-index: 5001;
     cursor: pointer;
+     text-align: center;
 }
 
 #controls {
@@ -168,12 +170,12 @@
     <h4>Text</h4>
 
     <label for="topTextInput">Top Text:</label>
-    <input type="text" id="topTextInput" value="gnome" autocomplete="off">
+    <textarea  id="topTextInput" value="gnome" autocomplete="off" rows="1">gnome</textarea>
     <script>
     const topTextInput = document.getElementById('topTextInput');
     const topTextSpan = document.getElementById('top-text');
     topTextInput.addEventListener('input', function() {
-        topTextSpan.textContent = this.value;
+        topTextSpan.innerHTML = this.value.replaceAll('\n', '<br>');
     });
     </script>
     <br>
@@ -189,12 +191,12 @@
     <br><br>
 
     <label for="bottomTextInput">Bottom Text:</label>
-    <input type="text" id="bottomTextInput" value="life" autocomplete="off">
+    <textarea  id="bottomTextInput" value="life" autocomplete="off" rows="1">life</textarea>
     <script>
     const bottomTextInput = document.getElementById('bottomTextInput');
     const bottomTextSpan = document.getElementById('bottom-text');
     bottomTextInput.addEventListener('input', function() {
-        bottomTextSpan.textContent = this.value;
+        bottomTextSpan.innerHTML = this.value.replaceAll('\n', '<br>');
     });
     </script>
     <br/>
