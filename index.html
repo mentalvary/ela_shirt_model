@@ -211,6 +211,17 @@
     });
     </script>
 
+    <br>
+    <label for="textColorPicker">Text Color:</label>
+    <input type="color" id="textColorPicker" value="#ffffff" autocomplete="off">
+    <script>
+    const textColorPicker = document.getElementById('textColorPicker');
+    textColorPicker.addEventListener('input', function() {
+        topTextSpan.style.color = this.value;
+        bottomTextSpan.style.color = this.value;
+    });
+    </script>
+
     <br><br>
     <span style="font-style: italic;">💡 Click on logo and texts to move around. Click again to let go.</span>
     </div>
