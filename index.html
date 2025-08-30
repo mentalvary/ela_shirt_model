@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ela Shirt Model</title>
+    <style>
+        html,body {
+            padding: 0px;
+            margin: 0px;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            
+        }
+    .image-overlay-container {
+        position: relative;
+        width: 600px;
+        height: 800px;
+    }
+    .overlay-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .over {
+        z-index: 9999;
+        pointer-events: none;
+    }
+
+
+    .color-overlay--1 {
+  z-index:2;
+  background-color:gray;
+  mix-blend-mode:color;
+}
+
+.color-overlay--2 {
+  z-index:3;
+  mix-blend-mode:plus-lighter;
+}
+
+#top-text {
+        color: white;
+    font-size: 30px;
+    transform: rotate(3deg);
+    position: absolute;
+    top: 45%;
+    left:43%;
+    z-index: 5001;
+    cursor: pointer;
+}
+
+#bottom-text {
+    color: white;
+    font-size: 30px;
+    transform: rotate(3deg);
+    position: absolute;
+    top: 70%;
+    left:43%;
+    z-index: 5001;
+    cursor: pointer;
+}
+
+#controls {
+    left: 640px;
+    top: 20px;
+  position: absolute;
+}
+    </style>
+
+    <script>
+        function makeDraggable(element) {
+            let isDragging = false;
+            let startX = 0;
+            let startY = 0;
+            let imgStartLeft = 0;
+            let imgStartTop = 0;
+
+            document.addEventListener('mousemove', function(e) {
+                if (isDragging) {
+                    let dx = e.clientX - startX;
+                    let dy = e.clientY - startY;
+                    element.style.left = (imgStartLeft + dx) + 'px';
+                    element.style.top = (imgStartTop + dy) + 'px';
+                }
+            });
+
+            element.addEventListener('mouseup', function(e) {
+                isDragging = !isDragging;
+                startX = e.clientX;
+                startY = e.clientY;
+                const r = element.getBoundingClientRect();
+                imgStartLeft = r.x// - r.width/2;
+                imgStartTop = r.y// - r.height/2;
+                element.style.cursor = isDragging ? 'grab' : 'pointer';
+                document.body.style.userSelect = '';
+            });
+        }
+        
+        window.addEventListener('DOMContentLoaded', function() {
+            makeDraggable(document.getElementById('draggable-img'));
+            makeDraggable(document.getElementById('top-text'));
+            makeDraggable(document.getElementById('bottom-text'));
+        });
+    </script>
+</head>
+<body>
+    <h1 style="position:absolute; left:50%; top: 10px; margin:0; transform: translateX(-50%); color:rgb(225, 0, 255); z-index: 100000">Ela Shirt Model</h1>
+    <div class="image-overlay-container">
+        <img src="shirt.png" alt="Image 1" class="overlay-image shirt">
+        <img src="no_shirt.png" alt="Image 2" class="overlay-image over" >
+        <div class="overlay-image color-overlay--1"></div>
+        <div class="overlay-image color-overlay--2"></div>
+        <img src="drag_img.png" alt="Draggable Image" id="draggable-img" style="position: absolute;top: 53%;left:40%; z-index: 5000;  cursor: pointer;  transform: rotate(3deg);  ">
+        <span id="top-text">gnome</span>
+        <span id="bottom-text">life</span>
+    </div>
+
+    <div id="controls">
+    <h4>Color</h4>
+    <label for="colorPicker">Shirt color:</label>
+    <input type="color" id="colorPicker" value="#000000" autocomplete="off">
+    <script>
+        const colorPicker = document.getElementById('colorPicker');
+        const overlay2 = document.querySelector('.color-overlay--2');
+        colorPicker.addEventListener('input', function() {
+            overlay2.style.backgroundColor = this.value;
+        });
+    </script>
+
+    <br>
+
+    <h4>Logo on shirt</h4>
+
+    <label for="imgUpload">Upload logo:</label>
+    <input type="file" id="imgUpload" accept="image/*">
+    <script>
+    document.getElementById('imgUpload').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+            document.getElementById('draggable-img').src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
+    </script>
+
+    <br><br>
+  
+    <label for="sizeSlider">Print size:</label>
+    <input type="range" id="sizeSlider" min="1" max="200" value="100" autocomplete="off">
+    <script>
+    const sizeSlider = document.getElementById('sizeSlider');
+    const draggableImg = document.getElementById('draggable-img');
+    sizeSlider.addEventListener('input', function() {
+        const percent = this.value;
+        draggableImg.style.width = percent + '%';
+    });
+    </script>
+
+    <br>
+    <h4>Text</h4>
+
+    <label for="topTextInput">Top Text:</label>
+    <input type="text" id="topTextInput" value="gnome" autocomplete="off">
+    <script>
+    const topTextInput = document.getElementById('topTextInput');
+    const topTextSpan = document.getElementById('top-text');
+    topTextInput.addEventListener('input', function() {
+        topTextSpan.textContent = this.value;
+    });
+    </script>
+    <br>
+    <label for="topTextSizeSlider">Top Text Size:</label>
+    <input type="range" id="topTextSizeSlider" min="10" max="100" value="30" autocomplete="off">
+    <script>
+    const topTextSizeSlider = document.getElementById('topTextSizeSlider');
+    topTextSizeSlider.addEventListener('input', function() {
+        topTextSpan.style.fontSize = this.value + 'px';
+    });
+    </script>
+
+    <br><br>
+
+    <label for="bottomTextInput">Bottom Text:</label>
+    <input type="text" id="bottomTextInput" value="life" autocomplete="off">
+    <script>
+    const bottomTextInput = document.getElementById('bottomTextInput');
+    const bottomTextSpan = document.getElementById('bottom-text');
+    bottomTextInput.addEventListener('input', function() {
+        bottomTextSpan.textContent = this.value;
+    });
+    </script>
+    <br/>
+    <label for="bottomTextSizeSlider">Bottom Text Size:</label>
+    <input type="range" id="bottomTextSizeSlider" min="10" max="100" value="30" autocomplete="off">
+    <script>
+    const bottomTextSizeSlider = document.getElementById('bottomTextSizeSlider');
+    bottomTextSizeSlider.addEventListener('input', function() {
+        bottomTextSpan.style.fontSize = this.value + 'px';
+    });
+    </script>
+
+    <br><br>
+    <span style="font-style: italic;">💡 Click on logo and texts to move around. Click again to let go.</span>
+    </div>
+</body>
+</html>
