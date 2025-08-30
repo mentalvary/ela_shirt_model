@@ -169,6 +169,16 @@
     </script>
 
     <br>
+    <label for="opacitySlider">Logo opacity:</label>
+    <input type="range" id="opacitySlider" min="0" max="100" value="100" autocomplete="off">
+    <script>
+    const opacitySlider = document.getElementById('opacitySlider');
+    opacitySlider.addEventListener('input', function() {
+        draggableImg.style.opacity = (this.value / 100).toString();
+    });
+    </script>
+
+    <br>
     <h4>Text</h4>
 
     <label for="topTextInput">Top Text:</label>
